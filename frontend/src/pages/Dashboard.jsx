@@ -7,6 +7,7 @@ import ApplicationCard from '../components/ApplicationCard';
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import './Dashboard.css';
 
+const API = 'https://job-tracker-1-5afr.onrender.com';
 const COLORS = ['#2563EB','#F59E0B','#10B981','#EF4444'];
 const STATUSES = ['All','Applied','Interview','Offer','Rejected'];
 
@@ -18,7 +19,6 @@ export default function Dashboard() {
   const { token } = useAuth();
   const navigate = useNavigate();
 
-  // ✅ FIX: wait for token before fetching
   useEffect(() => {
     if (token) {
       fetchApplications();
@@ -28,18 +28,11 @@ export default function Dashboard() {
   const fetchApplications = async () => {
     try {
       if (!token) return;
-
       setLoading(true);
-
       const res = await axios.get(
-        'http://localhost:5000/api/applications',
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
+        `${API}/api/applications`,
+        { headers: { Authorization: `Bearer ${token}` } }
       );
-
       setApplications(res.data);
     } catch (err) {
       console.error('Error fetching applications', err);
@@ -51,12 +44,8 @@ export default function Dashboard() {
   const handleDelete = async (id) => {
     try {
       await axios.delete(
-        `http://localhost:5000/api/applications/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
+        `${API}/api/applications/${id}`,
+        { headers: { Authorization: `Bearer ${token}` } }
       );
       fetchApplications();
     } catch (err) {
@@ -67,13 +56,9 @@ export default function Dashboard() {
   const handleStatusChange = async (id, status) => {
     try {
       await axios.put(
-        `https://job-tracker-1-5afr.onrender.com/api/applications/${id}`,
+        `${API}/api/applications/${id}`,
         { status },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
       fetchApplications();
     } catch (err) {
@@ -99,7 +84,6 @@ export default function Dashboard() {
 
       <div className="dashboard-container">
 
-        {/* HEADER */}
         <div className="dashboard-header">
           <h1>Dashboard</h1>
           <button onClick={() => navigate('/add-job')}>
@@ -107,7 +91,6 @@ export default function Dashboard() {
           </button>
         </div>
 
-        {/* STATS */}
         <div className="stats-grid">
           {[
             { label:'Total Applications', value: applications.length,                                  bg:'#eff6ff', color:'#2563eb' },
@@ -122,20 +105,10 @@ export default function Dashboard() {
                 background: stat.bg,
                 borderLeft: `4px solid ${stat.color}`
               }}>
-              <p style={{
-                color: stat.color,
-                fontWeight: '600',
-                fontSize: '13px',
-                margin: 0
-              }}>
+              <p style={{ color: stat.color, fontWeight: '600', fontSize: '13px', margin: 0 }}>
                 {stat.label}
               </p>
-              <h2 style={{
-                color: stat.color,
-                fontSize: '36px',
-                fontWeight: '800',
-                margin: '8px 0 0'
-              }}>
+              <h2 style={{ color: stat.color, fontSize: '36px', fontWeight: '800', margin: '8px 0 0' }}>
                 {stat.value}
               </h2>
             </div>
@@ -144,10 +117,7 @@ export default function Dashboard() {
 
         <div className="main-grid">
 
-          {/* LEFT */}
           <div className="applications">
-
-            {/* FILTERS */}
             <div className="filters">
               {STATUSES.map(s => (
                 <button
@@ -157,12 +127,10 @@ export default function Dashboard() {
                   {s}
                   {s !== 'All' && (
                     <span style={{
-                      marginLeft: '6px',
-                      fontSize: '11px',
+                      marginLeft: '6px', fontSize: '11px',
                       background: filter === s ? 'rgba(255,255,255,0.3)' : '#e5e7eb',
                       color: filter === s ? '#fff' : '#6b7280',
-                      padding: '1px 6px',
-                      borderRadius: '999px',
+                      padding: '1px 6px', borderRadius: '999px',
                     }}>
                       {applications.filter(a => a.status === s).length}
                     </span>
@@ -171,7 +139,6 @@ export default function Dashboard() {
               ))}
             </div>
 
-            {/* LIST */}
             {loading ? (
               <p className="empty">Loading...</p>
             ) : filtered.length === 0 ? (
@@ -188,7 +155,6 @@ export default function Dashboard() {
             )}
           </div>
 
-          {/* RIGHT CHART */}
           <div className="chart-card">
             <h3>Application Breakdown</h3>
             {chartData.length > 0 ? (
