@@ -10,4 +10,12 @@ export default defineConfig({
       'react-dom': path.resolve('./node_modules/react-dom'),
     },
   },
+  build: {
+    rollupOptions: {
+      onwarn(warning, warn) {
+        if (warning.code === 'MODULE_LEVEL_DIRECTIVE') return
+        warn(warning)
+      }
+    }
+  }
 })
