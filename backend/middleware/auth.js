@@ -4,7 +4,7 @@ module.exports = function (req, res, next) {
   try {
     const authHeader = req.headers.authorization;
 
-    console.log("AUTH HEADER:", authHeader); // 👈 DEBUG
+    console.log("AUTH HEADER:", authHeader); 
 
     if (!authHeader) {
       return res.status(401).json({ message: 'No token' });
@@ -12,12 +12,12 @@ module.exports = function (req, res, next) {
 
     const token = authHeader.split(' ')[1];
 
-    console.log("TOKEN:", token); // 👈 DEBUG
-    console.log("SECRET:", process.env.JWT_SECRET); // 👈 DEBUG
+    console.log("TOKEN:", token);
+    console.log("SECRET:", process.env.JWT_SECRET); 
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    console.log("DECODED:", decoded); // 👈 DEBUG
+    console.log("DECODED:", decoded); 
 
     req.user = decoded;
     next();
