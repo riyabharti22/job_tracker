@@ -67,7 +67,7 @@ export default function Dashboard() {
   const handleStatusChange = async (id, status) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/applications/${id}`,
+        `https://job-tracker-1-5afr.onrender.com/api/applications/${id}`,
         { status },
         {
           headers: {

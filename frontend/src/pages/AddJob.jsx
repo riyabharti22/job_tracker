@@ -27,7 +27,7 @@ export default function AddJob() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/applications', form, config);
+      await axios.post('https://job-tracker-1-5afr.onrender.com/api/applications', form, config);
       navigate('/dashboard');
     } catch (err) {
       console.error(err);
