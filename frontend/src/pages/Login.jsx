@@ -14,7 +14,6 @@ export default function Login() {
   );
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [showForgot, setShowForgot] = useState(false);
 
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -60,21 +59,6 @@ export default function Login() {
 
             {error && <p className="error">{error}</p>}
 
-            {showForgot && (
-              <div style={{
-                background: '#eff6ff',
-                border: '1px solid #bfdbfe',
-                borderRadius: '8px',
-                padding: '12px',
-                marginBottom: '14px',
-                fontSize: '13px',
-                color: '#1d4ed8',
-                textAlign: 'center',
-              }}>
-                📧 Please contact us at <strong>support@jobtracker.com</strong> to reset your password.
-              </div>
-            )}
-
             <form onSubmit={handleSubmit}>
               <input
                 type="email"
@@ -104,12 +88,9 @@ export default function Login() {
                 />
                 <span>Remember me</span>
               </label>
-              <span
-                className="forgot"
-                onClick={() => setShowForgot(!showForgot)}
-              >
+              <Link to="/forgot-password" className="forgot">
                 Forgot password?
-              </span>
+              </Link>
             </div>
 
             <p className="register">
