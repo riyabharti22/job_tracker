@@ -1,8 +1,8 @@
-# 💼 JobTracker — Full Stack Job Application Tracker
+# JobTracker — Full Stack Job Application Tracker
 
 A full-stack web application to help students and job seekers track their job applications, interviews, offers and rejections — all in one place.
 
-🌐 **Live Demo:** [https://job-tracker-z89u.vercel.app](https://job-tracker-z89u.vercel.app)
+ Live Demo: [https://job-tracker-z89u.vercel.app](https://job-tracker-z89u.vercel.app)
 
 ---
 
