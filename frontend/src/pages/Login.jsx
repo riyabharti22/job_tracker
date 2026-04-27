@@ -9,13 +9,12 @@ export default function Login() {
     email: localStorage.getItem('rememberedEmail') || '',
     password: '',
   });
-
   const [rememberMe, setRememberMe] = useState(
     !!localStorage.getItem('rememberedEmail')
   );
-
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showForgot, setShowForgot] = useState(false);
 
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -24,38 +23,23 @@ export default function Login() {
     e.preventDefault();
     setError('');
     setLoading(true);
-
     try {
       const res = await axios.post(
         'https://job-tracker-1-5afr.onrender.com/api/auth/login',
         form
       );
-
-      // 🔥 DEBUG (remove later)
-      console.log("LOGIN RESPONSE:", res.data);
-
-      if (!res.data.token) {
-        throw new Error("No token received from server");
-      }
-
-      // Remember email
+      if (!res.data.token) throw new Error('No token received');
       if (rememberMe) {
         localStorage.setItem('rememberedEmail', form.email);
       } else {
         localStorage.removeItem('rememberedEmail');
       }
-
-      // Save auth
       login(res.data.user, res.data.token);
-
       navigate('/dashboard');
-
     } catch (err) {
-      console.error("LOGIN ERROR:", err);
       setError(
         err.response?.data?.message ||
-        err.message ||
-        'Login failed'
+        'Invalid email or password. Please try again.'
       );
     } finally {
       setLoading(false);
@@ -65,7 +49,6 @@ export default function Login() {
   return (
     <div className="container">
       <div className="card">
-
         <div className="left">
           <h2>Welcome to My Dashboard</h2>
           <p>Login to access your account</p>
@@ -73,10 +56,24 @@ export default function Login() {
 
         <div className="right">
           <div className="login-box">
-
             <h3>Login</h3>
 
             {error && <p className="error">{error}</p>}
+
+            {showForgot && (
+              <div style={{
+                background: '#eff6ff',
+                border: '1px solid #bfdbfe',
+                borderRadius: '8px',
+                padding: '12px',
+                marginBottom: '14px',
+                fontSize: '13px',
+                color: '#1d4ed8',
+                textAlign: 'center',
+              }}>
+                📧 Please contact us at <strong>support@jobtracker.com</strong> to reset your password.
+              </div>
+            )}
 
             <form onSubmit={handleSubmit}>
               <input
@@ -86,7 +83,6 @@ export default function Login() {
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
                 required
               />
-
               <input
                 type="password"
                 placeholder="Password"
@@ -94,7 +90,6 @@ export default function Login() {
                 onChange={(e) => setForm({ ...form, password: e.target.value })}
                 required
               />
-
               <button type="submit" disabled={loading}>
                 {loading ? 'Logging in...' : 'LOG IN'}
               </button>
@@ -109,18 +104,20 @@ export default function Login() {
                 />
                 <span>Remember me</span>
               </label>
-
-              <span className="forgot">Forgot password?</span>
+              <span
+                className="forgot"
+                onClick={() => setShowForgot(!showForgot)}
+              >
+                Forgot password?
+              </span>
             </div>
 
             <p className="register">
               Don't have an account?{' '}
               <Link to="/register">Register</Link>
             </p>
-
           </div>
         </div>
-
       </div>
     </div>
   );

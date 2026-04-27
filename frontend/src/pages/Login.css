@@ -38,6 +38,9 @@ body {
   box-sizing: border-box;
 }
 
+.left h2 { margin: 0; font-size: 22px; }
+.left p { font-size: 14px; opacity: 0.9; }
+
 .right {
   width: 50%;
   background: #ffffff;
@@ -46,6 +49,7 @@ body {
   align-items: center;
   padding: 40px 24px;
   box-sizing: border-box;
+  overflow-y: auto;
 }
 
 .login-box {
@@ -58,10 +62,7 @@ body {
   box-sizing: border-box;
 }
 
-.login-box h3 {
-  text-align: center;
-  margin-bottom: 15px;
-}
+.login-box h3 { text-align: center; margin-bottom: 15px; }
 
 .error {
   color: red;
@@ -71,7 +72,8 @@ body {
 }
 
 .login-box input[type="email"],
-.login-box input[type="password"] {
+.login-box input[type="password"],
+.login-box input[type="text"] {
   width: 100%;
   padding: 10px;
   margin: 8px 0;
@@ -92,9 +94,12 @@ body {
   font-weight: bold;
 }
 
-.login-box button:hover {
-  background: #e14b4b;
+.login-box button:disabled {
+  background: #fca5a5;
+  cursor: not-allowed;
 }
+
+.login-box button:hover:not(:disabled) { background: #e14b4b; }
 
 .options {
   display: flex;
@@ -102,6 +107,8 @@ body {
   align-items: center;
   font-size: 12px;
   margin-top: 12px;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
 .remember {
@@ -111,13 +118,12 @@ body {
   white-space: nowrap;
 }
 
-.remember input {
-  margin: 0;
-}
+.remember input { margin: 0; }
 
 .forgot {
   color: #ff5c5c;
   cursor: pointer;
+  text-decoration: underline;
 }
 
 .register {
@@ -132,44 +138,15 @@ body {
   text-decoration: none;
 }
 
-/* TABLET */
 @media (max-width: 768px) {
-  .card {
-    flex-direction: column;
-    max-width: 480px;
-  }
-
-  .left {
-    width: 100%;
-    min-height: 160px;
-    padding: 24px;
-  }
-
-  .right {
-    width: 100%;
-    padding: 24px 16px;
-  }
+  .card { flex-direction: column; max-width: 480px; }
+  .left { width: 100%; min-height: 160px; padding: 24px; }
+  .right { width: 100%; padding: 24px 16px; }
 }
 
-/* MOBILE */
 @media (max-width: 480px) {
-  .container {
-    padding: 12px;
-    align-items: flex-start;
-    padding-top: 24px;
-  }
-
-  .left {
-    min-height: 120px;
-    padding: 20px;
-  }
-
-  .left h2 {
-    font-size: 18px;
-  }
-
-  .login-box {
-    padding: 20px 16px;
-    box-shadow: none;
-  }
+  .container { padding: 12px; align-items: flex-start; padding-top: 24px; }
+  .left { min-height: 120px; padding: 20px; }
+  .left h2 { font-size: 18px; }
+  .login-box { padding: 20px 16px; box-shadow: none; }
 }
