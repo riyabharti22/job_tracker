@@ -4,7 +4,7 @@ A full-stack web application to help students and job seekers track their job ap
 
  Live Demo: [https://job-tracker-z89u.vercel.app](https://job-tracker-z89u.vercel.app)
 
----
+--
 
 ##  Features
 
@@ -18,7 +18,7 @@ A full-stack web application to help students and job seekers track their job ap
 - 📱 **Responsive Design** — Works on mobile, tablet and desktop
 - 🔒 **Secure** — Each user sees only their own data
 
----
+--
 
 ##  Tech Stack
 
